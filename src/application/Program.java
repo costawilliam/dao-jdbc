@@ -16,9 +16,17 @@ public class Program {
 		System.out.println(seller);
 		System.out.println("");
 		
-		System.out.println("Teste 01 - Seller findByDepartment:");
+		System.out.println("Teste 02 - Seller findByDepartment:");
 		Department department = new Department(2, null);
 		List<Seller> list = sellerDao.findByDepartment(department);
+		
+		for(Seller s : list) {
+			System.out.println(s);
+		}
+		
+		System.out.println("");
+		System.out.println("Teste 03 - Seller findAll:");
+		list = sellerDao.findAll();
 		
 		for(Seller s : list) {
 			System.out.println(s);
