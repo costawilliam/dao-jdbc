@@ -43,6 +43,10 @@ public class Program {
 		seller = sellerDao.findById(1);
 		seller.setName("Jonh Smith");
 		sellerDao.update(seller);
+		
+		System.out.println("");
+		System.out.println("Teste 06- Seller delete:");
+		sellerDao.deleteById(10);
 	}
 
 }
