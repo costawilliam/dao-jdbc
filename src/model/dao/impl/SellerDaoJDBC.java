@@ -64,8 +64,8 @@ public class SellerDaoJDBC implements SellerDao {
 		PreparedStatement st = null;
 
 		try {
-			st = conn.prepareStatement("UPDATE seller " 
-					+ "SET name = ?, email = ?, birthdate = ?, basesalary = ?, departmentid = ? "
+			st = conn.prepareStatement("UPDATE seller "
+					+ "SET name = ?, email = ?, birthdate = ?, basesalary = ?, departmentid = ? " 
 					+ "WHERE ID = ?", Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, seller.getName());
@@ -96,8 +96,6 @@ public class SellerDaoJDBC implements SellerDao {
 		} finally {
 			DB.closeStatement(st);
 		}
-		
-
 	}
 
 	@Override
@@ -126,7 +124,6 @@ public class SellerDaoJDBC implements SellerDao {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
-
 	}
 
 	private Seller instantiateSeller(ResultSet rs, Department department) throws SQLException {
@@ -156,7 +153,8 @@ public class SellerDaoJDBC implements SellerDao {
 
 		try {
 			st = conn.prepareStatement("SELECT s.*, d.name AS DEPNAME FROM seller s "
-					+ "JOIN department d ON d.id = s.departmentid " + "ORDER BY s.name");
+					+ "JOIN department d ON d.id = s.departmentid " 
+					+ "ORDER BY s.name");
 
 			rs = st.executeQuery();
 
@@ -191,7 +189,8 @@ public class SellerDaoJDBC implements SellerDao {
 
 		try {
 			st = conn.prepareStatement("SELECT s.*, d.name AS DEPNAME FROM seller s "
-					+ "JOIN department d ON d.id = s.departmentid WHERE s.departmentid = ? " + "ORDER BY s.name");
+					+ "JOIN department d ON d.id = s.departmentid WHERE s.departmentid = ? " 
+					+ "ORDER BY s.name");
 			st.setInt(1, dep.getId());
 
 			rs = st.executeQuery();
