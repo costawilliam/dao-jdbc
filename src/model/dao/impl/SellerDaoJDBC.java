@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import db.DB;
 import db.DbException;
@@ -30,7 +29,8 @@ public class SellerDaoJDBC implements SellerDao {
 		PreparedStatement st = null;
 
 		try {
-			st = conn.prepareStatement("" + "INSERT INTO seller(" + "name, email, birthdate, basesalary, departmentid)"
+			st = conn.prepareStatement("" + "INSERT INTO seller(" 
+					+ "name, email, birthdate, basesalary, departmentid)"
 					+ "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, seller.getName());
@@ -61,8 +61,26 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void update(Seller seller) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
 
+		try {
+			st = conn.prepareStatement("UPDATE seller " 
+					+ "SET name = ?, email = ?, birthdate = ?, basesalary = ?, departmentid = ? "
+					+ "WHERE ID = ?", Statement.RETURN_GENERATED_KEYS);
+
+			st.setString(1, seller.getName());
+			st.setString(2, seller.getEmail());
+			st.setDate(3, new java.sql.Date(seller.getBirthDate().getTime()));
+			st.setDouble(4, seller.getBaseSalary());
+			st.setInt(5, seller.getDepartment().getId());
+			st.setInt(6, seller.getId());
+
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
